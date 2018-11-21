@@ -1,0 +1,86 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../ciLispSrc/ciLisp.h
+stdio.h
+-
+stdlib.h
+-
+stdarg.h
+-
+string.h
+-
+math.h
+-
+time.h
+-
+stdbool.h
+-
+ciLispParser.h
+../ciLispSrc/ciLispParser.h
+
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/ciLispSrc/ciLisp.c
+ciLisp.h
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/ciLispSrc/ciLisp.h
+math.h
+-
+
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/ciLispSrc/ciLisp.h
+stdio.h
+-
+stdlib.h
+-
+stdarg.h
+-
+string.h
+-
+math.h
+-
+time.h
+-
+stdbool.h
+-
+ciLispParser.h
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/ciLispSrc/ciLispParser.h
+
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c
+ciLisp.h
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLisp.h
+stddef.h
+-
+libintl.h
+-
+alloca.h
+-
+malloc.h
+-
+stdlib.h
+-
+stdlib.h
+-
+stdio.h
+-
+
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispScanner.c
+stdio.h
+-
+string.h
+-
+errno.h
+-
+stdlib.h
+-
+inttypes.h
+-
+ciLisp.h
+/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLisp.h
+unistd.h
+-
+
+ciLispParser.h
+
