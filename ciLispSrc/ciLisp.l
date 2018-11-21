@@ -145,4 +145,3 @@ int main(void) {
     }
 }
 
-//((let (a 100)) (cond (smaller (rand) 100) (add a 2) (sub a 2)))

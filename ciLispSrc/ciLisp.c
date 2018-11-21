@@ -108,6 +108,7 @@ AST_NODE *function(char *funcName, AST_NODE *s_expr_list)
         double temp;
         printf("read := ");
         scanf("%lf", &temp);
+        getc(stdin); // remove the number inputted
         p->data.function.opList = number( temp );
     }
 
