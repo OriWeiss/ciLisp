@@ -60,37 +60,37 @@
     <session id="405649381">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="16" />
+          <entry key="project.closed" value="22" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.6" value="5" />
-          <entry key="project.open.time.7" value="7" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="19" />
+          <entry key="project.open.time.7" value="9" />
+          <entry key="project.open.time.8" value="4" />
+          <entry key="project.open.time.9" value="5" />
+          <entry key="project.opened" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="4550" />
-          <entry key="h" value="100" />
-          <entry key="l" value="144" />
+          <entry key="c" value="7112" />
+          <entry key="h" value="242" />
+          <entry key="l" value="200" />
           <entry key="m" value="11" />
           <entry key="txt" value="13" />
-          <entry key="y" value="855" />
+          <entry key="y" value="1444" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CMakeLists.txt" value="13" />
-          <entry key="ObjectiveC" value="4661" />
-          <entry key="PLAIN_TEXT" value="999" />
+          <entry key="ObjectiveC" value="7365" />
+          <entry key="PLAIN_TEXT" value="1644" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="c" value="7" />
-          <entry key="cilisp (disassembly)" value="8" />
+          <entry key="c" value="9" />
+          <entry key="cilisp (disassembly)" value="11" />
           <entry key="h" value="1" />
           <entry key="l" value="2" />
           <entry key="txt" value="4" />
@@ -100,8 +100,8 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CMakeLists.txt" value="4" />
-          <entry key="Disassembly" value="8" />
-          <entry key="ObjectiveC" value="8" />
+          <entry key="Disassembly" value="11" />
+          <entry key="ObjectiveC" value="10" />
           <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
@@ -152,8 +152,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="114" column="13" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
+            <state relative-caret-position="316">
+              <caret line="480" column="1" lean-forward="true" selection-start-line="480" selection-start-column="1" selection-end-line="480" selection-end-column="1" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -164,8 +164,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
+            <state relative-caret-position="357">
+              <caret line="63" column="8" selection-start-line="63" selection-start-column="8" selection-end-line="63" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -173,8 +173,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.l">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="147" selection-start-line="147" selection-end-line="147" />
+            <state relative-caret-position="-459">
+              <caret line="37" column="18" lean-forward="true" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -182,8 +182,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="128" column="18" selection-start-line="128" selection-start-column="18" selection-end-line="128" selection-end-column="18" />
+            <state relative-caret-position="150">
+              <caret line="83" column="32" selection-start-line="83" selection-start-column="15" selection-end-line="83" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -207,6 +207,16 @@
       <find>setScope</find>
       <find>setParent</find>
       <find>setFunc</find>
+      <find>set</find>
+      <find>//</find>
+      <find>LET</find>
+      <find>user</find>
+      <find>let_elem</find>
+      <find>lambda</find>
+      <find>arg_lo</find>
+      <find>arg_li</find>
+      <find>args</find>
+      <find>let_ele</find>
     </findStrings>
     <replaceStrings>
       <replace>fprintf(stderr,</replace>
@@ -220,9 +230,9 @@
       <list>
         <option value="$PROJECT_DIR$/../Intro_to_yacc_calc_08/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/ciLispSrc/ciLisp.l" />
         <option value="$PROJECT_DIR$/ciLispSrc/ciLisp.h" />
         <option value="$PROJECT_DIR$/ciLispSrc/ciLisp.y" />
-        <option value="$PROJECT_DIR$/ciLispSrc/ciLisp.l" />
         <option value="$PROJECT_DIR$/ciLispSrc/ciLisp.c" />
       </list>
     </option>
@@ -234,31 +244,31 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="273" />
-    <option name="y" value="-30" />
-    <option name="width" value="1257" />
-    <option name="height" value="1032" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>C/C++</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="cilisp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Ori_Weiss_ciLisp" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -268,7 +278,7 @@
     <property name="options.lastSelected" value="appearance" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -341,12 +351,18 @@
       <workItem from="1542777797541" duration="2047000" />
       <workItem from="1542782038091" duration="4332000" />
       <workItem from="1542832964728" duration="2010000" />
-      <workItem from="1542837311840" duration="2489000" />
+      <workItem from="1542837311840" duration="2744000" />
+      <workItem from="1542840289235" duration="589000" />
+      <workItem from="1543205761304" duration="6502000" />
+      <workItem from="1543270203703" duration="6264000" />
+      <workItem from="1543447807881" duration="7235000" />
+      <workItem from="1543875121847" duration="5816000" />
+      <workItem from="1543882077126" duration="13819000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114338000" />
+    <option name="totallyTimeSpent" value="154818000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -358,19 +374,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1292" height="692" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4955595" weight="0.14805825" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4955595" weight="0.147651" />
       <window_info id="Favorites" order="1" side_tool="true" weight="0.3295302" />
-      <window_info id="Structure" order="2" sideWeight="0.5044405" visible="true" weight="0.14805825" />
+      <window_info id="Structure" order="2" sideWeight="0.5044405" weight="0.15369128" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49932885" visible="true" weight="0.26465365" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49932885" visible="true" weight="0.2638298" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" weight="0.3248227" />
-      <window_info anchor="bottom" id="Messages" order="6" weight="0.4724689" />
+      <window_info anchor="bottom" id="Messages" order="6" weight="0.6652482" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3268206" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50067115" side_tool="true" weight="0.32765958" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32907802" />
@@ -380,7 +396,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="Debug" order="4" weight="0.38106796" />
+      <window_info active="true" anchor="right" id="Debug" order="4" visible="true" weight="0.5228188" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,39 +410,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/ciLispSrc/ciLisp.c</url>
-          <line>454</line>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/ciLispSrc/ciLisp.c</url>
-          <line>20</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/ciLispSrc/ciLisp.c</url>
-          <line>432</line>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/ciLispSrc/ciLisp.c</url>
-          <line>434</line>
-          <option name="timeStamp" value="49" />
+          <line>558</line>
+          <option name="timeStamp" value="57" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="CMakeRunConfiguration">
-        <watch expression="p-&gt;data.function.opList-&gt;next" />
-        <watch expression="p-&gt;data" />
-        <watch expression="p-&gt;parent" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>p-&gt;data.function.opList</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>a-&gt;parent</expression-string>
         <language-id>ObjectiveC</language-id>
@@ -457,36 +456,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/ciLispParser.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22219">
-          <caret line="1307" selection-start-line="1307" selection-end-line="1307" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.y">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="128" column="18" selection-start-line="128" selection-start-column="18" selection-end-line="128" selection-end-column="18" />
+        <state relative-caret-position="646">
+          <caret line="1342" selection-start-line="1342" selection-end-line="1342" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.l">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="147" selection-start-line="147" selection-end-line="147" />
+        <state relative-caret-position="-459">
+          <caret line="37" column="18" lean-forward="true" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="83" column="32" selection-start-line="83" selection-start-column="15" selection-end-line="83" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.y">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="63" column="8" selection-start-line="63" selection-start-column="8" selection-end-line="63" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ciLispSrc/ciLisp.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="114" column="13" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
+        <state relative-caret-position="316">
+          <caret line="480" column="1" lean-forward="true" selection-start-line="480" selection-start-column="1" selection-end-line="480" selection-end-column="1" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

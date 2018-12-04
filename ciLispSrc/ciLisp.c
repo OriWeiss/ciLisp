@@ -14,7 +14,7 @@ void yyerror(char *s) {
 // find out which function it is
 //
 
-SYMBOL_TABLE_NODE * findNodeByName(char * name, SYMBOL_TABLE_NODE * list)
+SYMBOL_TABLE_NODE * findSymbolNodeByName(char *name, SYMBOL_TABLE_NODE *list)
 {
     while (list != NULL) {
         if (strcmp(name,  list->ident) == 0)
@@ -23,7 +23,14 @@ SYMBOL_TABLE_NODE * findNodeByName(char * name, SYMBOL_TABLE_NODE * list)
     }
     return NULL;
 }
-
+STACK_NODE *findStackNodeByName(char *name, STACK_NODE *stack){
+    while (stack != NULL) {
+        if (strcmp(name,  stack->val->data.symbol.name) == 0)
+            return stack;
+        stack = stack->next;
+    }
+    return NULL;
+}
 OPER_TYPE resolveFunc(char *func)
 {
     char *funcs[] = {
@@ -189,7 +196,7 @@ SYMBOL_TABLE_NODE* let_list(SYMBOL_TABLE_NODE *symbol, SYMBOL_TABLE_NODE *list)
   if(list == NULL)
       return symbol;
 
-  SYMBOL_TABLE_NODE *node = findNodeByName(symbol->ident, list);
+  SYMBOL_TABLE_NODE *node = findSymbolNodeByName(symbol->ident, list);
   if (node == NULL) {
       symbol->next = list;
       list = symbol;
@@ -198,22 +205,50 @@ SYMBOL_TABLE_NODE* let_list(SYMBOL_TABLE_NODE *symbol, SYMBOL_TABLE_NODE *list)
 }
 
 // create a new symbol and return it
-SYMBOL_TABLE_NODE *let_elem(char* type, char* symbol, AST_NODE *s_expr)
+SYMBOL_TABLE_NODE *let_elem(SYMBOL_TYPE symType, char* type, char* symbol, SYMBOL_TABLE_NODE *args, AST_NODE *s_expr)
 {
     SYMBOL_TABLE_NODE *p;
     size_t nodeSize;
 
     // allocate space the symbol
     nodeSize = sizeof(SYMBOL_TABLE_NODE);
-    if ((p = malloc(nodeSize)) == NULL)
+    if ((p = calloc(1,nodeSize)) == NULL)
         yyerror("out of memory");
 
+    p->type = symType;
     p->val_type = resolveType(type);
     p->ident = symbol;
+    p->args = args;
     p->val = s_expr;
-    p->next = NULL;
+
+
+//    p->next = NULL; //commented out since using calloc
     return p;
 }
+
+SYMBOL_TABLE_NODE *arg_list (char *symbol, SYMBOL_TABLE_NODE *list){
+    SYMBOL_TABLE_NODE *p;
+    size_t nodeSize;
+
+    // allocate space for the stack
+    nodeSize = sizeof(SYMBOL_TABLE_NODE);
+    if ((p = calloc(1,nodeSize)) == NULL)
+        yyerror("out of memory");
+
+    if(list == NULL) {
+        p->ident = symbol;
+        p->type = ARG_TYPE;
+        return p;
+    }
+    SYMBOL_TABLE_NODE *node = findSymbolNodeByName(symbol, list); //check to see if variable already exists
+    if (node == NULL) {
+        p->next= list;
+        p->ident = symbol;
+        p->type = ARG_TYPE;
+    }
+    return p;
+}
+
 
 AST_NODE *setScope(SYMBOL_TABLE_NODE *scope, AST_NODE *sExpr){
     sExpr->scope = scope;
@@ -353,7 +388,7 @@ RETURN_VALUE evalSymbol(char *name, AST_NODE *symbol)
   //  printf("symbol : %s\n", name);
 
     //try to find node in this scope.
-    SYMBOL_TABLE_NODE * node = findNodeByName(name, symbol->scope);
+    SYMBOL_TABLE_NODE * node = findSymbolNodeByName(name, symbol->scope);
 
     //if in this scope
     if (node != NULL) {
@@ -385,42 +420,123 @@ int countList(AST_NODE *opList){
     return i;
 }
 
-RETURN_VALUE specialFuncEval(char *name, AST_NODE *opList){
+SYMBOL_TABLE_NODE *findSymbolWithScope(char *name,AST_NODE *p){
+    if (p == NULL)
+        return NULL;
+    SYMBOL_TABLE_NODE * node = findSymbolNodeByName(name,p->scope);
+    if (node != NULL)
+        return node;
+    return findSymbolWithScope(name,p->parent);
+}
+
+
+RETURN_VALUE userFunction(AST_NODE *p)
+{
+    SYMBOL_TABLE_NODE *lambda = NULL;
+    //find lambda
+
+    lambda = findSymbolWithScope(p->data.function.name,p);
+
+    int numOfArgs = 0;
+    SYMBOL_TABLE_NODE *args  = p->scope->args;
+    while(args!=NULL){ //count args
+        numOfArgs++;
+        args=args->next;
+    }
+
+    AST_NODE *opList = p->data.function.opList;
+    int numOfOps = 0;
+    while(opList!=NULL){ //count ops
+        numOfOps++;
+        opList=opList->next;
+    }
+
+    if(numOfOps > numOfArgs){
+        //BAD
+        yyerror("There are more operans than arguments");
+        return (RETURN_VALUE){ NO_TYPE, 0.0 };
+    }
+    else if (numOfOps < numOfArgs){
+        //WARNING
+        printf("Warning there are more arguments than operands");
+    }
+    args = lambda->args;
+    opList = p->data.function.opList;
+    while(args!=NULL){
+        STACK_NODE *temp = args->stack;
+        args->stack = calloc(1, sizeof(STACK_NODE));
+        args->stack->next = temp;
+        args->stack->val = opList;
+        args = args->next;
+        opList = opList->next;
+    }
+
+    RETURN_VALUE val = eval(lambda->args->stack->val);
+    args = lambda->args; //reset args
+    while(args != NULL){
+        args->val = args->val->next;
+        args = args->next;
+    }
+    return val;
+}
+
+
+RETURN_VALUE specialFuncEval(char *name, AST_NODE *p){
    // printf("func name : %s\n", name);
 
     RETURN_VALUE val = {NO_TYPE, 0.0};
-    int type = resolveFunc(name);
-    AST_NODE *curr = opList;
-    int listLength = countList(opList);
-    if (type == ADD || type== MULT){
-        if (listLength < 2){ //error handling too few arguments
-            printf("ERROR: too few parameters for the function %s", name);
-            return (RETURN_VALUE) {REAL_TYPE, 0.0};
-        }
-        val = eval_func(type, eval(curr), eval(curr->next));
-        curr= curr->next->next;
-        while(curr != NULL){
-            val = eval_func(type, val, eval(curr));
-            curr=curr->next;
-        }
-    }
-    else if (type == PRINT){
-        printf("=>");
-        while(curr != NULL){
-            val = eval_func(type, eval(curr), val);
-            curr = curr->next;
-        }
-    }
-    //else if(type==RAND){
-      //  return (RETURN_VALUE) { NO_TYPE, rand() };
-    //}
-    else{
-        if (listLength > 2){ //error handling too few arguments
-            printf("WARNING: too many parameters for the function %s", name);
-            return (RETURN_VALUE) {REAL_TYPE, 0.0};
-        }
-        val = eval_func(type, eval(curr), eval(curr->next));
+    AST_NODE *opList = p->data.function.opList;
+    OPER_TYPE type = resolveFunc(name);
+    if(type == INVALID_OPER){
+        //allocate space
 
+        return userFunction(p);
+
+//        while((args != NULL) && (opList !=NULL)) {
+//
+//            args->stack->val = opList;
+//            args = args->next;
+//            opList = opList->next;
+//        }
+    }
+    else {
+
+        /*
+         * if resolve function does not find the function
+         *    I know its a user defined function
+         *    assign the appropriate oplist to the corresponding args stack
+         *   eval(p.scope.val.data)
+         *   pop x stack and y stack
+         */
+
+
+        AST_NODE *curr = opList;
+        int listLength = countList(opList);
+        if (type == ADD || type == MULT) {
+            if (listLength < 2) { //error handling too few arguments
+                printf("ERROR: too few parameters for the function %s", name);
+                return (RETURN_VALUE) {REAL_TYPE, 0.0};
+            }
+            val = eval_func(type, eval(curr), eval(curr->next));
+            curr = curr->next->next;
+            while (curr != NULL) {
+                val = eval_func(type, val, eval(curr));
+                curr = curr->next;
+            }
+        } else if (type == PRINT) {
+            printf("=>");
+            while (curr != NULL) {
+                val = eval_func(type, eval(curr), val);
+                curr = curr->next;
+            }
+        } else {
+            if (listLength > 2) { //error handling too few arguments
+                printf("WARNING: too many parameters for the function %s", name);
+                return (RETURN_VALUE) {REAL_TYPE, 0.0};
+            }
+            val = eval_func(type, eval(curr), eval(curr->next));
+
+        }
     }
     return val;
 
@@ -445,7 +561,7 @@ RETURN_VALUE eval(AST_NODE *p)
     if (!p)
         return (RETURN_VALUE){REAL_TYPE, 0.0};
 /*
-    printf("node type : %s\n", 
+    printf("node type : %s\n",
         (p->type == NUM_TYPE) ? "NUM_TYPE" :
         (p->type == FUNC_TYPE) ? "FUNC_TYPE" :
         (p->type == SYM_TYPE) ? "SYM_TYPE" :
@@ -460,15 +576,10 @@ RETURN_VALUE eval(AST_NODE *p)
         case SYM_TYPE:
             return evalSymbol(p->data.symbol.name,p);
         case FUNC_TYPE:
-            return specialFuncEval(p->data.function.name,p->data.function.opList);
+            return specialFuncEval(p->data.function.name,p);
         case COND_TYPE:
             return evalCondition(p);
         default:
             return (RETURN_VALUE){NO_TYPE, 0.0}; //shouldn't get here.
     }
 }
-
-//((let (a 100)) (cond (smaller (rand) 100) (add a 2) (sub a 2)))
-//((let (myA (read))(myB (rand)))(cond (smaller myA myB) (print myA) (print myB)))
-//((let (myA 4)(myB(rand)))(cond(smaller myA myB)(print myA)(print myB)))
-//((let (myA 5)(myB 3))(cond(smaller myA myB)(print myA)(print myB)))

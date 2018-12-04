@@ -54,7 +54,8 @@ extern int yydebug;
     EOL = 264,
     QUIT = 265,
     LET = 266,
-    COND = 267
+    COND = 267,
+    LAMBDA = 268
   };
 #endif
 
@@ -63,14 +64,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 33 "ciLispSrc/ciLisp.y" /* yacc.c:1909  */
+#line 6 "ciLispSrc/ciLisp.y" /* yacc.c:1909  */
 
     double dval;
     char *sval;
     struct ast_node *astNode;
     struct symbol_table_node* symNode;
 
-#line 74 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.h" /* yacc.c:1909  */
+#line 75 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

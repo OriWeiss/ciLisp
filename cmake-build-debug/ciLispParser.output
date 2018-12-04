@@ -11,53 +11,63 @@ Grammar
 
     5 let_elem: LPAREN TYPE SYMBOL s_expr RPAREN
     6         | LPAREN SYMBOL s_expr RPAREN
+    7         | LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN
+    8         | LPAREN SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN
 
-    7 s_expr: NUMBER
-    8       | LPAREN FUNC s_expr_list RPAREN
-    9       | LPAREN FUNC RPAREN
-   10       | SYMBOL
-   11       | LPAREN scope s_expr RPAREN
-   12       | LPAREN s_expr RPAREN
-   13       | LPAREN COND s_expr_list RPAREN
-   14       | QUIT
-   15       | error
+    9 s_expr: NUMBER
+   10       | LPAREN FUNC s_expr_list RPAREN
+   11       | LPAREN FUNC RPAREN
+   12       | SYMBOL
+   13       | LPAREN scope s_expr RPAREN
+   14       | LPAREN s_expr RPAREN
+   15       | LPAREN COND s_expr_list RPAREN
+   16       | LPAREN SYMBOL s_expr_list RPAREN
+   17       | QUIT
+   18       | error
 
-   16 s_expr_list: s_expr s_expr_list
-   17            | s_expr
+   19 arg_list: SYMBOL arg_list
+   20         | SYMBOL
+
+   21 s_expr_list: s_expr s_expr_list
+   22            | s_expr
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-error (256) 15
-FUNC (258) 8 9
-SYMBOL (259) 5 6 10
-TYPE (260) 5
-NUMBER (261) 7
-LPAREN (262) 2 5 6 8 9 11 12 13
-RPAREN (263) 2 5 6 8 9 11 12 13
+error (256) 18
+FUNC (258) 10 11
+SYMBOL (259) 5 6 7 8 12 16 19 20
+TYPE (260) 5 7
+NUMBER (261) 9
+LPAREN (262) 2 5 6 7 8 10 11 13 14 15 16
+RPAREN (263) 2 5 6 7 8 10 11 13 14 15 16
 EOL (264) 1
-QUIT (265) 14
+QUIT (265) 17
 LET (266) 2
-COND (267) 13
+COND (267) 15
+LAMBDA (268) 7 8
 
 
 Nonterminals, with rules where they appear
 
-$accept (13)
+$accept (14)
     on left: 0
-program (14)
+program (15)
     on left: 1, on right: 0
-scope (15)
-    on left: 2, on right: 11
-let_list (16)
+scope (16)
+    on left: 2, on right: 13
+let_list (17)
     on left: 3 4, on right: 2 4
-let_elem (17)
-    on left: 5 6, on right: 3 4
-s_expr (18)
-    on left: 7 8 9 10 11 12 13 14 15, on right: 1 5 6 11 12 16 17
-s_expr_list (19)
-    on left: 16 17, on right: 8 13 16
+let_elem (18)
+    on left: 5 6 7 8, on right: 3 4
+s_expr (19)
+    on left: 9 10 11 12 13 14 15 16 17 18, on right: 1 5 6 7 8 13 14
+    21 22
+arg_list (20)
+    on left: 19 20, on right: 7 8 19
+s_expr_list (21)
+    on left: 21 22, on right: 10 15 16 21
 
 
 State 0
@@ -76,121 +86,126 @@ State 0
 
 State 1
 
-   15 s_expr: error .
+   18 s_expr: error .
 
-    $default  reduce using rule 15 (s_expr)
+    $default  reduce using rule 18 (s_expr)
 
 
 State 2
 
-   10 s_expr: SYMBOL .
+   12 s_expr: SYMBOL .
 
-    $default  reduce using rule 10 (s_expr)
+    $default  reduce using rule 12 (s_expr)
 
 
 State 3
 
-    7 s_expr: NUMBER .
+    9 s_expr: NUMBER .
 
-    $default  reduce using rule 7 (s_expr)
+    $default  reduce using rule 9 (s_expr)
 
 
 State 4
 
-    8 s_expr: LPAREN . FUNC s_expr_list RPAREN
-    9       | LPAREN . FUNC RPAREN
-   11       | LPAREN . scope s_expr RPAREN
-   12       | LPAREN . s_expr RPAREN
-   13       | LPAREN . COND s_expr_list RPAREN
+   10 s_expr: LPAREN . FUNC s_expr_list RPAREN
+   11       | LPAREN . FUNC RPAREN
+   13       | LPAREN . scope s_expr RPAREN
+   14       | LPAREN . s_expr RPAREN
+   15       | LPAREN . COND s_expr_list RPAREN
+   16       | LPAREN . SYMBOL s_expr_list RPAREN
 
     error   shift, and go to state 1
     FUNC    shift, and go to state 8
-    SYMBOL  shift, and go to state 2
+    SYMBOL  shift, and go to state 9
     NUMBER  shift, and go to state 3
-    LPAREN  shift, and go to state 9
+    LPAREN  shift, and go to state 10
     QUIT    shift, and go to state 5
-    COND    shift, and go to state 10
+    COND    shift, and go to state 11
 
-    scope   go to state 11
-    s_expr  go to state 12
+    scope   go to state 12
+    s_expr  go to state 13
 
 
 State 5
 
-   14 s_expr: QUIT .
+   17 s_expr: QUIT .
 
-    $default  reduce using rule 14 (s_expr)
+    $default  reduce using rule 17 (s_expr)
 
 
 State 6
 
     0 $accept: program . $end
 
-    $end  shift, and go to state 13
+    $end  shift, and go to state 14
 
 
 State 7
 
     1 program: s_expr . EOL
 
-    EOL  shift, and go to state 14
+    EOL  shift, and go to state 15
 
 
 State 8
 
-    8 s_expr: LPAREN FUNC . s_expr_list RPAREN
-    9       | LPAREN FUNC . RPAREN
+   10 s_expr: LPAREN FUNC . s_expr_list RPAREN
+   11       | LPAREN FUNC . RPAREN
 
     error   shift, and go to state 1
     SYMBOL  shift, and go to state 2
     NUMBER  shift, and go to state 3
     LPAREN  shift, and go to state 4
-    RPAREN  shift, and go to state 15
+    RPAREN  shift, and go to state 16
     QUIT    shift, and go to state 5
 
-    s_expr       go to state 16
-    s_expr_list  go to state 17
+    s_expr       go to state 17
+    s_expr_list  go to state 18
 
 
 State 9
 
-    2 scope: LPAREN . LET let_list RPAREN
-    8 s_expr: LPAREN . FUNC s_expr_list RPAREN
-    9       | LPAREN . FUNC RPAREN
-   11       | LPAREN . scope s_expr RPAREN
-   12       | LPAREN . s_expr RPAREN
-   13       | LPAREN . COND s_expr_list RPAREN
+   12 s_expr: SYMBOL .
+   16       | LPAREN SYMBOL . s_expr_list RPAREN
 
     error   shift, and go to state 1
-    FUNC    shift, and go to state 8
     SYMBOL  shift, and go to state 2
     NUMBER  shift, and go to state 3
-    LPAREN  shift, and go to state 9
+    LPAREN  shift, and go to state 4
     QUIT    shift, and go to state 5
-    LET     shift, and go to state 18
-    COND    shift, and go to state 10
 
-    scope   go to state 11
-    s_expr  go to state 12
+    RPAREN  reduce using rule 12 (s_expr)
+
+    s_expr       go to state 17
+    s_expr_list  go to state 19
 
 
 State 10
 
-   13 s_expr: LPAREN COND . s_expr_list RPAREN
+    2 scope: LPAREN . LET let_list RPAREN
+   10 s_expr: LPAREN . FUNC s_expr_list RPAREN
+   11       | LPAREN . FUNC RPAREN
+   13       | LPAREN . scope s_expr RPAREN
+   14       | LPAREN . s_expr RPAREN
+   15       | LPAREN . COND s_expr_list RPAREN
+   16       | LPAREN . SYMBOL s_expr_list RPAREN
 
     error   shift, and go to state 1
-    SYMBOL  shift, and go to state 2
+    FUNC    shift, and go to state 8
+    SYMBOL  shift, and go to state 9
     NUMBER  shift, and go to state 3
-    LPAREN  shift, and go to state 4
+    LPAREN  shift, and go to state 10
     QUIT    shift, and go to state 5
+    LET     shift, and go to state 20
+    COND    shift, and go to state 11
 
-    s_expr       go to state 16
-    s_expr_list  go to state 19
+    scope   go to state 12
+    s_expr  go to state 13
 
 
 State 11
 
-   11 s_expr: LPAREN scope . s_expr RPAREN
+   15 s_expr: LPAREN COND . s_expr_list RPAREN
 
     error   shift, and go to state 1
     SYMBOL  shift, and go to state 2
@@ -198,41 +213,55 @@ State 11
     LPAREN  shift, and go to state 4
     QUIT    shift, and go to state 5
 
-    s_expr  go to state 20
+    s_expr       go to state 17
+    s_expr_list  go to state 21
 
 
 State 12
 
-   12 s_expr: LPAREN s_expr . RPAREN
+   13 s_expr: LPAREN scope . s_expr RPAREN
 
-    RPAREN  shift, and go to state 21
+    error   shift, and go to state 1
+    SYMBOL  shift, and go to state 2
+    NUMBER  shift, and go to state 3
+    LPAREN  shift, and go to state 4
+    QUIT    shift, and go to state 5
+
+    s_expr  go to state 22
 
 
 State 13
+
+   14 s_expr: LPAREN s_expr . RPAREN
+
+    RPAREN  shift, and go to state 23
+
+
+State 14
 
     0 $accept: program $end .
 
     $default  accept
 
 
-State 14
+State 15
 
     1 program: s_expr EOL .
 
     $default  reduce using rule 1 (program)
 
 
-State 15
-
-    9 s_expr: LPAREN FUNC RPAREN .
-
-    $default  reduce using rule 9 (s_expr)
-
-
 State 16
 
-   16 s_expr_list: s_expr . s_expr_list
-   17            | s_expr .
+   11 s_expr: LPAREN FUNC RPAREN .
+
+    $default  reduce using rule 11 (s_expr)
+
+
+State 17
+
+   21 s_expr_list: s_expr . s_expr_list
+   22            | s_expr .
 
     error   shift, and go to state 1
     SYMBOL  shift, and go to state 2
@@ -240,149 +269,262 @@ State 16
     LPAREN  shift, and go to state 4
     QUIT    shift, and go to state 5
 
-    RPAREN  reduce using rule 17 (s_expr_list)
+    RPAREN  reduce using rule 22 (s_expr_list)
 
-    s_expr       go to state 16
-    s_expr_list  go to state 22
-
-
-State 17
-
-    8 s_expr: LPAREN FUNC s_expr_list . RPAREN
-
-    RPAREN  shift, and go to state 23
+    s_expr       go to state 17
+    s_expr_list  go to state 24
 
 
 State 18
 
-    2 scope: LPAREN LET . let_list RPAREN
+   10 s_expr: LPAREN FUNC s_expr_list . RPAREN
 
-    LPAREN  shift, and go to state 24
-
-    let_list  go to state 25
-    let_elem  go to state 26
+    RPAREN  shift, and go to state 25
 
 
 State 19
 
-   13 s_expr: LPAREN COND s_expr_list . RPAREN
+   16 s_expr: LPAREN SYMBOL s_expr_list . RPAREN
 
-    RPAREN  shift, and go to state 27
+    RPAREN  shift, and go to state 26
 
 
 State 20
 
-   11 s_expr: LPAREN scope s_expr . RPAREN
+    2 scope: LPAREN LET . let_list RPAREN
 
-    RPAREN  shift, and go to state 28
+    LPAREN  shift, and go to state 27
+
+    let_list  go to state 28
+    let_elem  go to state 29
 
 
 State 21
 
-   12 s_expr: LPAREN s_expr RPAREN .
+   15 s_expr: LPAREN COND s_expr_list . RPAREN
 
-    $default  reduce using rule 12 (s_expr)
+    RPAREN  shift, and go to state 30
 
 
 State 22
 
-   16 s_expr_list: s_expr s_expr_list .
+   13 s_expr: LPAREN scope s_expr . RPAREN
 
-    $default  reduce using rule 16 (s_expr_list)
+    RPAREN  shift, and go to state 31
 
 
 State 23
 
-    8 s_expr: LPAREN FUNC s_expr_list RPAREN .
+   14 s_expr: LPAREN s_expr RPAREN .
 
-    $default  reduce using rule 8 (s_expr)
+    $default  reduce using rule 14 (s_expr)
 
 
 State 24
 
-    5 let_elem: LPAREN . TYPE SYMBOL s_expr RPAREN
-    6         | LPAREN . SYMBOL s_expr RPAREN
+   21 s_expr_list: s_expr s_expr_list .
 
-    SYMBOL  shift, and go to state 29
-    TYPE    shift, and go to state 30
+    $default  reduce using rule 21 (s_expr_list)
 
 
 State 25
 
-    2 scope: LPAREN LET let_list . RPAREN
-    4 let_list: let_list . let_elem
+   10 s_expr: LPAREN FUNC s_expr_list RPAREN .
 
-    LPAREN  shift, and go to state 24
-    RPAREN  shift, and go to state 31
-
-    let_elem  go to state 32
+    $default  reduce using rule 10 (s_expr)
 
 
 State 26
+
+   16 s_expr: LPAREN SYMBOL s_expr_list RPAREN .
+
+    $default  reduce using rule 16 (s_expr)
+
+
+State 27
+
+    5 let_elem: LPAREN . TYPE SYMBOL s_expr RPAREN
+    6         | LPAREN . SYMBOL s_expr RPAREN
+    7         | LPAREN . TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN
+    8         | LPAREN . SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN
+
+    SYMBOL  shift, and go to state 32
+    TYPE    shift, and go to state 33
+
+
+State 28
+
+    2 scope: LPAREN LET let_list . RPAREN
+    4 let_list: let_list . let_elem
+
+    LPAREN  shift, and go to state 27
+    RPAREN  shift, and go to state 34
+
+    let_elem  go to state 35
+
+
+State 29
 
     3 let_list: let_elem .
 
     $default  reduce using rule 3 (let_list)
 
 
-State 27
+State 30
 
-   13 s_expr: LPAREN COND s_expr_list RPAREN .
+   15 s_expr: LPAREN COND s_expr_list RPAREN .
+
+    $default  reduce using rule 15 (s_expr)
+
+
+State 31
+
+   13 s_expr: LPAREN scope s_expr RPAREN .
 
     $default  reduce using rule 13 (s_expr)
 
 
-State 28
-
-   11 s_expr: LPAREN scope s_expr RPAREN .
-
-    $default  reduce using rule 11 (s_expr)
-
-
-State 29
+State 32
 
     6 let_elem: LPAREN SYMBOL . s_expr RPAREN
+    8         | LPAREN SYMBOL . LAMBDA LPAREN arg_list RPAREN s_expr RPAREN
 
     error   shift, and go to state 1
     SYMBOL  shift, and go to state 2
     NUMBER  shift, and go to state 3
     LPAREN  shift, and go to state 4
     QUIT    shift, and go to state 5
+    LAMBDA  shift, and go to state 36
 
-    s_expr  go to state 33
+    s_expr  go to state 37
 
 
-State 30
+State 33
 
     5 let_elem: LPAREN TYPE . SYMBOL s_expr RPAREN
+    7         | LPAREN TYPE . SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN
 
-    SYMBOL  shift, and go to state 34
+    SYMBOL  shift, and go to state 38
 
 
-State 31
+State 34
 
     2 scope: LPAREN LET let_list RPAREN .
 
     $default  reduce using rule 2 (scope)
 
 
-State 32
+State 35
 
     4 let_list: let_list let_elem .
 
     $default  reduce using rule 4 (let_list)
 
 
-State 33
+State 36
+
+    8 let_elem: LPAREN SYMBOL LAMBDA . LPAREN arg_list RPAREN s_expr RPAREN
+
+    LPAREN  shift, and go to state 39
+
+
+State 37
 
     6 let_elem: LPAREN SYMBOL s_expr . RPAREN
 
-    RPAREN  shift, and go to state 35
+    RPAREN  shift, and go to state 40
 
 
-State 34
+State 38
 
     5 let_elem: LPAREN TYPE SYMBOL . s_expr RPAREN
+    7         | LPAREN TYPE SYMBOL . LAMBDA LPAREN arg_list RPAREN s_expr RPAREN
+
+    error   shift, and go to state 1
+    SYMBOL  shift, and go to state 2
+    NUMBER  shift, and go to state 3
+    LPAREN  shift, and go to state 4
+    QUIT    shift, and go to state 5
+    LAMBDA  shift, and go to state 41
+
+    s_expr  go to state 42
+
+
+State 39
+
+    8 let_elem: LPAREN SYMBOL LAMBDA LPAREN . arg_list RPAREN s_expr RPAREN
+
+    SYMBOL  shift, and go to state 43
+
+    arg_list  go to state 44
+
+
+State 40
+
+    6 let_elem: LPAREN SYMBOL s_expr RPAREN .
+
+    $default  reduce using rule 6 (let_elem)
+
+
+State 41
+
+    7 let_elem: LPAREN TYPE SYMBOL LAMBDA . LPAREN arg_list RPAREN s_expr RPAREN
+
+    LPAREN  shift, and go to state 45
+
+
+State 42
+
+    5 let_elem: LPAREN TYPE SYMBOL s_expr . RPAREN
+
+    RPAREN  shift, and go to state 46
+
+
+State 43
+
+   19 arg_list: SYMBOL . arg_list
+   20         | SYMBOL .
+
+    SYMBOL  shift, and go to state 43
+
+    $default  reduce using rule 20 (arg_list)
+
+    arg_list  go to state 47
+
+
+State 44
+
+    8 let_elem: LPAREN SYMBOL LAMBDA LPAREN arg_list . RPAREN s_expr RPAREN
+
+    RPAREN  shift, and go to state 48
+
+
+State 45
+
+    7 let_elem: LPAREN TYPE SYMBOL LAMBDA LPAREN . arg_list RPAREN s_expr RPAREN
+
+    SYMBOL  shift, and go to state 43
+
+    arg_list  go to state 49
+
+
+State 46
+
+    5 let_elem: LPAREN TYPE SYMBOL s_expr RPAREN .
+
+    $default  reduce using rule 5 (let_elem)
+
+
+State 47
+
+   19 arg_list: SYMBOL arg_list .
+
+    $default  reduce using rule 19 (arg_list)
+
+
+State 48
+
+    8 let_elem: LPAREN SYMBOL LAMBDA LPAREN arg_list RPAREN . s_expr RPAREN
 
     error   shift, and go to state 1
     SYMBOL  shift, and go to state 2
@@ -390,25 +532,52 @@ State 34
     LPAREN  shift, and go to state 4
     QUIT    shift, and go to state 5
 
-    s_expr  go to state 36
+    s_expr  go to state 50
 
 
-State 35
+State 49
 
-    6 let_elem: LPAREN SYMBOL s_expr RPAREN .
+    7 let_elem: LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list . RPAREN s_expr RPAREN
 
-    $default  reduce using rule 6 (let_elem)
-
-
-State 36
-
-    5 let_elem: LPAREN TYPE SYMBOL s_expr . RPAREN
-
-    RPAREN  shift, and go to state 37
+    RPAREN  shift, and go to state 51
 
 
-State 37
+State 50
 
-    5 let_elem: LPAREN TYPE SYMBOL s_expr RPAREN .
+    8 let_elem: LPAREN SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr . RPAREN
 
-    $default  reduce using rule 5 (let_elem)
+    RPAREN  shift, and go to state 52
+
+
+State 51
+
+    7 let_elem: LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN . s_expr RPAREN
+
+    error   shift, and go to state 1
+    SYMBOL  shift, and go to state 2
+    NUMBER  shift, and go to state 3
+    LPAREN  shift, and go to state 4
+    QUIT    shift, and go to state 5
+
+    s_expr  go to state 53
+
+
+State 52
+
+    8 let_elem: LPAREN SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN .
+
+    $default  reduce using rule 8 (let_elem)
+
+
+State 53
+
+    7 let_elem: LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr . RPAREN
+
+    RPAREN  shift, and go to state 54
+
+
+State 54
+
+    7 let_elem: LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN .
+
+    $default  reduce using rule 7 (let_elem)

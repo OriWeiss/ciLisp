@@ -26,7 +26,12 @@ type "integer"|"real"
 
 "quit" {
     return QUIT;
-    }
+}
+"lambda" {
+    fprintf(stderr, "lex: LAMBDA\n");
+    return LAMBDA;
+
+}
 {number} {
     yylval.dval = strtod(yytext, NULL);
     fprintf(stderr, "lex: NUMBER dval = %lf\n", yylval.dval);

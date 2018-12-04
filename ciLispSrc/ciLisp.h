@@ -44,6 +44,12 @@ typedef enum oper { // must be in sync with funcs in resolveFunc()
 } OPER_TYPE;
 
 typedef enum {
+    VARIABLE_TYPE,
+    LAMBDA_TYPE,
+    ARG_TYPE
+} SYMBOL_TYPE; //TODO: added task 7
+
+typedef enum {
     NO_TYPE,
     INTEGER_TYPE,
     REAL_TYPE
@@ -60,6 +66,11 @@ typedef struct {
     double value;
 } NUMBER_AST_NODE;
 
+typedef struct stack_node {
+    struct ast_node *val;
+    struct stack_node *next;
+} STACK_NODE; //TODO: added task 7
+
 typedef struct {
     char *name;
     struct ast_node *opList; //was op1 and op2
@@ -71,9 +82,12 @@ typedef struct return_value {
 } RETURN_VALUE;
 
 typedef struct symbol_table_node {
+    SYMBOL_TYPE type; //TODO: added task 7
     DATA_TYPE val_type;
+    struct symbol_table_node *args;
     char *ident;
     struct ast_node *val;
+    STACK_NODE *stack; //TODO: added task 7
     struct symbol_table_node *next;
 } SYMBOL_TABLE_NODE;
 
@@ -114,7 +128,7 @@ AST_NODE *symbol(char* name);
 
 SYMBOL_TABLE_NODE* let_list(SYMBOL_TABLE_NODE *symbol, SYMBOL_TABLE_NODE *list);
 
-SYMBOL_TABLE_NODE *let_elem(char *type,char* symbol, AST_NODE *s_expr);
+SYMBOL_TABLE_NODE* let_elem(SYMBOL_TYPE symType, char* type, char* symbol, SYMBOL_TABLE_NODE *args, AST_NODE *s_expr);
 
 AST_NODE *setScope(SYMBOL_TABLE_NODE *scope, AST_NODE *sExpr);
 
@@ -129,4 +143,9 @@ AST_NODE *s_expr_list(AST_NODE *s_expr, AST_NODE *list);
 AST_NODE *function(char *funcName, AST_NODE *s_expr_list);
 
 RETURN_VALUE specialFuncEval(char *name, AST_NODE *opList);
+
+SYMBOL_TABLE_NODE *arg_list (char *symbol, SYMBOL_TABLE_NODE *list);
+
 #endif
+
+//((let (f lambda (x y) (add x y)))(f (sub 5 2) (mult 2 3))
