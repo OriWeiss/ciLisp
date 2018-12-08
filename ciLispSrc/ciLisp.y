@@ -29,6 +29,14 @@ program:
             freeNode($1);
         }
     };
+
+scope:
+    LPAREN LET let_list RPAREN {
+        fprintf(stderr,"scope\n");
+        $$ = $3;
+
+    };
+
 let_list:
     let_elem {
           fprintf(stderr,"let_elem\n");
@@ -39,12 +47,7 @@ let_list:
             $$ = let_list($2, $1);
     };
 
-scope:
-    LPAREN LET let_list RPAREN {
-        fprintf(stderr,"scope\n");
-        $$ = $3;
 
-    };
 
 let_elem:
     LPAREN TYPE SYMBOL s_expr RPAREN {
@@ -71,6 +74,15 @@ s_expr:
         fprintf(stderr, "yacc: s_expr ::= NUMBER\n");
         $$ = number($1);
     }
+    | SYMBOL {
+            fprintf(stderr,"yacc: SYMBOL %s\n",$1);
+            $$ = symbol($1);
+        }
+    | LPAREN scope s_expr RPAREN{
+            fprintf(stderr, "LPAREN SCOPE S_EXPR RPAREN\n");
+            //printf("sending %s", ($3->data.function.name))
+            $$ = setScope($2,$3);
+        }
     | LPAREN FUNC s_expr_list RPAREN{
         fprintf(stderr, "LPAREN func s_expr_list RPAREN\n");
         $$ = function($2,$3);
@@ -78,14 +90,6 @@ s_expr:
     | LPAREN FUNC RPAREN{
         fprintf(stderr, "LPAREN FUNC RPAREN\n");
         $$ = function($2, NULL);
-    }
-    | SYMBOL {
-        fprintf(stderr,"yacc: SYMBOL \n");
-        $$ = symbol($1);
-    }
-    | LPAREN scope s_expr RPAREN{
-        fprintf(stderr, "LPAREN SCOPE S_EXPR RPAREN\n");
-        $$ = setScope($2,$3);
     }
     | LPAREN s_expr RPAREN {
         fprintf(stderr,"yacc: LPAREN s_expr RPAREN \n");
