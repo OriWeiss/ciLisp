@@ -23,22 +23,25 @@ SYMBOL_TABLE_NODE * findSymbolNodeByName(char *name, SYMBOL_TABLE_NODE *list)
     }
     return NULL;
 }
-STACK_NODE *findStackNodeByName(char *name, STACK_NODE *stack){
-    while (stack != NULL) {
-        if (strcmp(name,  stack->val->data.symbol.name) == 0)
-            return stack;
-        stack = stack->next;
-    }
-    return NULL;
+
+SYMBOL_TABLE_NODE *findSymbolWithScope(char *name,AST_NODE *p){
+    if (p == NULL)
+        return NULL;
+    SYMBOL_TABLE_NODE * node = findSymbolNodeByName(name,p->scope);
+    if (node != NULL)
+        return node;
+    return findSymbolWithScope(name,p->parent);
 }
+
+
 OPER_TYPE resolveFunc(char *func)
 {
     char *funcs[] = {
-        "neg", "abs", "exp", "sqrt", "add", "sub", 
-        "mult", "div", "remainder", "log", "pow", 
-        "max", "min","exp2","cbrt","hypot","print", 
-        "rand", "read", "equal", "smaller", "larger", ""
-        };
+            "neg", "abs", "exp", "sqrt", "add", "sub",
+            "mult", "div", "remainder", "log", "pow",
+            "max", "min","exp2","cbrt","hypot","print",
+            "rand", "read", "equal", "smaller", "larger", ""
+    };
 
     int i = 0;
     while (funcs[i][0] != '\0')
@@ -47,7 +50,7 @@ OPER_TYPE resolveFunc(char *func)
             return i;
         i++;
     }
-    yyerror("invalid function");
+    //yyerror("invalid function");
     return INVALID_OPER;
 }
 
@@ -86,7 +89,7 @@ AST_NODE *conditional(AST_NODE * s_expr_list)
     AST_NODE * p = calloc(1, sizeof(AST_NODE) + sizeof(COND_AST_NODE));
     if (p == NULL)
         yyerror("out of memory");
-    
+
     p->type = COND_TYPE;
     p->data.condition.cond = s_expr_list;
     p->data.condition.nonzero = p->data.condition.cond->next;
@@ -193,15 +196,15 @@ AST_NODE *symbol(char* name)
 // add the new symbol to the list and return it
 SYMBOL_TABLE_NODE* let_list(SYMBOL_TABLE_NODE *symbol, SYMBOL_TABLE_NODE *list)
 {
-  if(list == NULL)
-      return symbol;
+    if(list == NULL)
+        return symbol;
 
-  SYMBOL_TABLE_NODE *node = findSymbolNodeByName(symbol->ident, list);
-  if (node == NULL) {
-      symbol->next = list;
-      list = symbol;
-  }
-  return list;
+    SYMBOL_TABLE_NODE *node = findSymbolNodeByName(symbol->ident, list);
+    if (node == NULL) {
+        symbol->next = list;
+        list = symbol;
+    }
+    return list;
 }
 
 // create a new symbol and return it
@@ -220,6 +223,7 @@ SYMBOL_TABLE_NODE *let_elem(SYMBOL_TYPE symType, char* type, char* symbol, SYMBO
     p->ident = symbol;
     p->args = args;
     p->val = s_expr;
+    p->val->scope = p->args;
 
 
 //    p->next = NULL; //commented out since using calloc
@@ -257,12 +261,12 @@ AST_NODE *setScope(SYMBOL_TABLE_NODE *scope, AST_NODE *sExpr){
 
 void setParent(AST_NODE *p){
     if(p->type == FUNC_TYPE){
-         AST_NODE *list = p->data.function.opList;
-         while (list->next != NULL) {
-             list->parent = p;
-             list = list->next;
-         }
-         list->parent = p; //deals with last case
+        AST_NODE *list = p->data.function.opList;
+        while (list->next != NULL) {
+            list->parent = p;
+            list = list->next;
+        }
+        list->parent = p; //deals with last case
     }
     else if(p->type == COND_TYPE){
         p->data.condition.zero->parent = p;
@@ -385,14 +389,19 @@ RETURN_VALUE typeConversions(RETURN_VALUE val, DATA_TYPE val_type, char * name)
 
 RETURN_VALUE evalSymbol(char *name, AST_NODE *symbol)
 {
-  //  printf("symbol : %s\n", name);
+    //  printf("symbol : %s\n", name);
 
     //try to find node in this scope.
-    SYMBOL_TABLE_NODE * node = findSymbolNodeByName(name, symbol->scope);
-
+    SYMBOL_TABLE_NODE * node = findSymbolWithScope(name, symbol);
+    RETURN_VALUE val = {NO_TYPE, 0.0};
     //if in this scope
     if (node != NULL) {
-        RETURN_VALUE val = eval(node->val);
+        if(node->type == ARG_TYPE){
+            val = eval(node->stack->val);
+        }
+        else {
+            val = eval(node->val);
+        }
         //incompatible types: (node)integer -> (eval)real
         if (node->val_type == INTEGER_TYPE)
             val.value = round(val.value);
@@ -402,8 +411,9 @@ RETURN_VALUE evalSymbol(char *name, AST_NODE *symbol)
     //could not find in this scope.
 
     //check parent scope.
+
     if(symbol->parent != NULL)
-         return evalSymbol(name, symbol->parent);
+        return evalSymbol(name, symbol->parent);
 
     //no more scopes to check, DNE
     printf("Could not find the symbol %s\n",name);
@@ -420,14 +430,7 @@ int countList(AST_NODE *opList){
     return i;
 }
 
-SYMBOL_TABLE_NODE *findSymbolWithScope(char *name,AST_NODE *p){
-    if (p == NULL)
-        return NULL;
-    SYMBOL_TABLE_NODE * node = findSymbolNodeByName(name,p->scope);
-    if (node != NULL)
-        return node;
-    return findSymbolWithScope(name,p->parent);
-}
+
 
 
 RETURN_VALUE userFunction(AST_NODE *p)
@@ -438,7 +441,7 @@ RETURN_VALUE userFunction(AST_NODE *p)
     lambda = findSymbolWithScope(p->data.function.name,p);
 
     int numOfArgs = 0;
-    SYMBOL_TABLE_NODE *args  = p->scope->args;
+    SYMBOL_TABLE_NODE *args  = lambda->args;
     while(args!=NULL){ //count args
         numOfArgs++;
         args=args->next;
@@ -453,12 +456,12 @@ RETURN_VALUE userFunction(AST_NODE *p)
 
     if(numOfOps > numOfArgs){
         //BAD
-        yyerror("There are more operans than arguments");
+        yyerror("There are more operands than arguments");
         return (RETURN_VALUE){ NO_TYPE, 0.0 };
     }
     else if (numOfOps < numOfArgs){
         //WARNING
-        printf("Warning there are more arguments than operands");
+        printf("Warning there are more arguments than operands\n");
     }
     args = lambda->args;
     opList = p->data.function.opList;
@@ -470,19 +473,24 @@ RETURN_VALUE userFunction(AST_NODE *p)
         args = args->next;
         opList = opList->next;
     }
+//
+    args = lambda->args;
+    lambda->val->scope = args;
 
-    RETURN_VALUE val = eval(lambda->args->stack->val);
+//
+    RETURN_VALUE val = eval(lambda->val);
     args = lambda->args; //reset args
-    while(args != NULL){
-        args->val = args->val->next;
-        args = args->next;
-    }
+     //added args stack !=NULL
+    STACK_NODE *temp = args->stack;
+    args->stack = args->stack->next;
+    free(temp);
+
     return val;
 }
 
 
 RETURN_VALUE specialFuncEval(char *name, AST_NODE *p){
-   // printf("func name : %s\n", name);
+    // printf("func name : %s\n", name);
 
     RETURN_VALUE val = {NO_TYPE, 0.0};
     AST_NODE *opList = p->data.function.opList;
@@ -490,14 +498,8 @@ RETURN_VALUE specialFuncEval(char *name, AST_NODE *p){
     if(type == INVALID_OPER){
         //allocate space
 
-        return userFunction(p);
+        val = userFunction(p);
 
-//        while((args != NULL) && (opList !=NULL)) {
-//
-//            args->stack->val = opList;
-//            args = args->next;
-//            opList = opList->next;
-//        }
     }
     else {
 
@@ -541,7 +543,7 @@ RETURN_VALUE specialFuncEval(char *name, AST_NODE *p){
     return val;
 
 }
-
+//((let(real smart lambda (x y) (add x y)))(smart(smart 2 3) 4))
 RETURN_VALUE evalCondition(AST_NODE * p)
 {
     RETURN_VALUE val = eval(p->data.condition.cond);
@@ -583,3 +585,5 @@ RETURN_VALUE eval(AST_NODE *p)
             return (RETURN_VALUE){NO_TYPE, 0.0}; //shouldn't get here.
     }
 }
+
+//((let(lambda real smart(x y)(add x y)))(smart (smart 2 3) 4))

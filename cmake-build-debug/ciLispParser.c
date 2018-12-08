@@ -442,9 +442,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    24,    24,    34,    40,    44,    49,    53,    57,    62,
-      69,    73,    77,    81,    85,    89,    93,    97,   101,   105,
-     111,   115,   122,   126
+       0,    24,    24,    33,    37,    43,    50,    54,    58,    63,
+      70,    74,    78,    82,    86,    90,    94,    98,   102,   106,
+     112,   116,   123,   127
 };
 #endif
 
@@ -455,7 +455,7 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "FUNC", "SYMBOL", "TYPE", "NUMBER",
   "LPAREN", "RPAREN", "EOL", "QUIT", "LET", "COND", "LAMBDA", "$accept",
-  "program", "scope", "let_list", "let_elem", "s_expr", "arg_list",
+  "program", "let_list", "scope", "let_elem", "s_expr", "arg_list",
   "s_expr_list", YY_NULLPTR
 };
 #endif
@@ -499,8 +499,8 @@ static const yytype_uint8 yydefact[] =
 {
        0,    19,    13,    10,     0,    18,     0,     0,     0,     0,
        0,     0,     0,     0,     1,     2,    12,     0,     0,     0,
-       0,     0,     0,    15,    22,    11,    17,     0,     0,     4,
-      16,    14,     0,     0,     3,     5,     0,     0,     0,     0,
+       0,     0,     0,    15,    22,    11,    17,     0,     0,     3,
+      16,    14,     0,     0,     5,     4,     0,     0,     0,     0,
        7,     0,     0,    21,     0,     0,     6,    20,     0,     0,
        0,     0,     9,     0,     8
 };
@@ -514,7 +514,7 @@ static const yytype_int8 yypgoto[] =
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     6,    12,    28,    29,    17,    44,    18
+      -1,     6,    28,    12,    29,    17,    44,    18
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -551,8 +551,8 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,     1,     4,     6,     7,    10,    15,    19,     3,     4,
-       7,    12,    16,    19,     0,     9,     8,    19,    21,    21,
-      11,    21,    19,     8,    21,     8,     8,     7,    17,    18,
+       7,    12,    17,    19,     0,     9,     8,    19,    21,    21,
+      11,    21,    19,     8,    21,     8,     8,     7,    16,    18,
        8,     8,     4,     5,     8,    18,    13,    19,     4,     7,
        8,    13,    19,     4,    20,     7,     8,    20,     8,    20,
       19,     8,     8,    19,     8
@@ -561,7 +561,7 @@ static const yytype_uint8 yystos[] =
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    14,    15,    16,    17,    17,    18,    18,    18,    18,
+       0,    14,    15,    16,    16,    17,    18,    18,    18,    18,
       19,    19,    19,    19,    19,    19,    19,    19,    19,    19,
       20,    20,    21,    21
 };
@@ -569,7 +569,7 @@ static const yytype_uint8 yyr1[] =
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     4,     1,     2,     5,     4,     9,     8,
+       0,     2,     2,     1,     2,     4,     5,     4,     9,     8,
        1,     4,     3,     1,     4,     3,     4,     4,     1,     1,
        2,     1,     2,     1
 };
@@ -1261,35 +1261,35 @@ yyreduce:
     break;
 
   case 3:
-#line 34 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 33 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+    {
+          fprintf(stderr,"let_elem\n");
+          (yyval.symNode) = let_list((yyvsp[0].symNode), NULL);
+    }
+#line 1270 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 37 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+    {
+            fprintf(stderr,"let_list let_elem\n");
+            (yyval.symNode) = let_list((yyvsp[0].symNode), (yyvsp[-1].symNode));
+    }
+#line 1279 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 43 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"scope\n");
         (yyval.symNode) = (yyvsp[-1].symNode);
 
     }
-#line 1271 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
-    break;
-
-  case 4:
-#line 40 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
-    {
-          fprintf(stderr,"let_elem\n");
-          (yyval.symNode) = let_list((yyvsp[0].symNode), NULL);
-    }
-#line 1280 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
-    break;
-
-  case 5:
-#line 44 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
-    {
-            fprintf(stderr,"let_list let_elem\n");
-            (yyval.symNode) = let_list((yyvsp[0].symNode), (yyvsp[-1].symNode));
-    }
 #line 1289 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 49 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 50 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN %s SYMBOL s_expr RPAREN\n", (yyvsp[-3].sval));
         (yyval.symNode) = let_elem(VARIABLE_TYPE, (yyvsp[-3].sval), (yyvsp[-2].sval), NULL, (yyvsp[-1].astNode));
@@ -1298,7 +1298,7 @@ yyreduce:
     break;
 
   case 7:
-#line 53 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 54 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN SYMBOL s_expr RPAREN\n");
         (yyval.symNode) = let_elem(VARIABLE_TYPE, NULL, (yyvsp[-2].sval), NULL, (yyvsp[-1].astNode));
@@ -1307,7 +1307,7 @@ yyreduce:
     break;
 
   case 8:
-#line 57 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 58 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN\n");
         (yyval.symNode) = let_elem(LAMBDA_TYPE, (yyvsp[-7].sval), (yyvsp[-6].sval), (yyvsp[-3].symNode), (yyvsp[-1].astNode));
@@ -1317,7 +1317,7 @@ yyreduce:
     break;
 
   case 9:
-#line 62 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 63 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN\n");
         (yyval.symNode) = let_elem(LAMBDA_TYPE, "REAL", (yyvsp[-6].sval), (yyvsp[-3].symNode), (yyvsp[-1].astNode));
@@ -1327,7 +1327,7 @@ yyreduce:
     break;
 
   case 10:
-#line 69 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 70 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= NUMBER\n");
         (yyval.astNode) = number((yyvsp[0].dval));
@@ -1336,7 +1336,7 @@ yyreduce:
     break;
 
   case 11:
-#line 73 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 74 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "LPAREN func s_expr_list RPAREN\n");
         (yyval.astNode) = function((yyvsp[-2].sval),(yyvsp[-1].astNode));
@@ -1345,7 +1345,7 @@ yyreduce:
     break;
 
   case 12:
-#line 77 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 78 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "LPAREN FUNC RPAREN\n");
         (yyval.astNode) = function((yyvsp[-1].sval), NULL);
@@ -1354,7 +1354,7 @@ yyreduce:
     break;
 
   case 13:
-#line 81 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 82 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"yacc: SYMBOL \n");
         (yyval.astNode) = symbol((yyvsp[0].sval));
@@ -1363,7 +1363,7 @@ yyreduce:
     break;
 
   case 14:
-#line 85 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 86 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "LPAREN SCOPE S_EXPR RPAREN\n");
         (yyval.astNode) = setScope((yyvsp[-2].symNode),(yyvsp[-1].astNode));
@@ -1372,7 +1372,7 @@ yyreduce:
     break;
 
   case 15:
-#line 89 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 90 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"yacc: LPAREN s_expr RPAREN \n");
         (yyval.astNode) = (yyvsp[-1].astNode);
@@ -1381,7 +1381,7 @@ yyreduce:
     break;
 
   case 16:
-#line 93 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 94 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= LPAREN COND s_expr_list RPAREN\n");
         (yyval.astNode) = conditional((yyvsp[-1].astNode));
@@ -1390,7 +1390,7 @@ yyreduce:
     break;
 
   case 17:
-#line 97 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 98 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "LPAREN SYMBOL s_expr_list RPAREN\n");
         (yyval.astNode) = function((yyvsp[-2].sval), (yyvsp[-1].astNode));
@@ -1399,7 +1399,7 @@ yyreduce:
     break;
 
   case 18:
-#line 101 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 102 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= QUIT\n");
         exit(EXIT_SUCCESS);
@@ -1408,7 +1408,7 @@ yyreduce:
     break;
 
   case 19:
-#line 105 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 106 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= error\n");
         yyerror("unexpected token");
@@ -1418,7 +1418,7 @@ yyreduce:
     break;
 
   case 20:
-#line 111 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 112 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"SYMBOL arglist\n");
         (yyval.symNode) = arg_list((yyvsp[-1].sval), (yyvsp[0].symNode));
@@ -1427,7 +1427,7 @@ yyreduce:
     break;
 
   case 21:
-#line 115 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 116 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"SYMBOL\n");
         (yyval.symNode) = arg_list((yyvsp[0].sval), NULL);
@@ -1437,7 +1437,7 @@ yyreduce:
     break;
 
   case 22:
-#line 122 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 123 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "s_expr s_expr_list\n");
         (yyval.astNode) = s_expr_list((yyvsp[-1].astNode),(yyvsp[0].astNode));
@@ -1446,7 +1446,7 @@ yyreduce:
     break;
 
   case 23:
-#line 126 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 127 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "s_expr\n");
         (yyval.astNode) = s_expr_list((yyvsp[0].astNode),NULL);
@@ -1683,4 +1683,4 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 130 "ciLispSrc/ciLisp.y" /* yacc.c:1906  */
+#line 131 "ciLispSrc/ciLisp.y" /* yacc.c:1906  */

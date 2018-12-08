@@ -4,10 +4,10 @@ Grammar
 
     1 program: s_expr EOL
 
-    2 scope: LPAREN LET let_list RPAREN
+    2 let_list: let_elem
+    3         | let_list let_elem
 
-    3 let_list: let_elem
-    4         | let_list let_elem
+    4 scope: LPAREN LET let_list RPAREN
 
     5 let_elem: LPAREN TYPE SYMBOL s_expr RPAREN
     6         | LPAREN SYMBOL s_expr RPAREN
@@ -40,11 +40,11 @@ FUNC (258) 10 11
 SYMBOL (259) 5 6 7 8 12 16 19 20
 TYPE (260) 5 7
 NUMBER (261) 9
-LPAREN (262) 2 5 6 7 8 10 11 13 14 15 16
-RPAREN (263) 2 5 6 7 8 10 11 13 14 15 16
+LPAREN (262) 4 5 6 7 8 10 11 13 14 15 16
+RPAREN (263) 4 5 6 7 8 10 11 13 14 15 16
 EOL (264) 1
 QUIT (265) 17
-LET (266) 2
+LET (266) 4
 COND (267) 15
 LAMBDA (268) 7 8
 
@@ -55,12 +55,12 @@ $accept (14)
     on left: 0
 program (15)
     on left: 1, on right: 0
-scope (16)
-    on left: 2, on right: 13
-let_list (17)
-    on left: 3 4, on right: 2 4
+let_list (16)
+    on left: 2 3, on right: 3 4
+scope (17)
+    on left: 4, on right: 13
 let_elem (18)
-    on left: 5 6 7 8, on right: 3 4
+    on left: 5 6 7 8, on right: 2 3
 s_expr (19)
     on left: 9 10 11 12 13 14 15 16 17 18, on right: 1 5 6 7 8 13 14
     21 22
@@ -182,7 +182,7 @@ State 9
 
 State 10
 
-    2 scope: LPAREN . LET let_list RPAREN
+    4 scope: LPAREN . LET let_list RPAREN
    10 s_expr: LPAREN . FUNC s_expr_list RPAREN
    11       | LPAREN . FUNC RPAREN
    13       | LPAREN . scope s_expr RPAREN
@@ -291,7 +291,7 @@ State 19
 
 State 20
 
-    2 scope: LPAREN LET . let_list RPAREN
+    4 scope: LPAREN LET . let_list RPAREN
 
     LPAREN  shift, and go to state 27
 
@@ -354,8 +354,8 @@ State 27
 
 State 28
 
-    2 scope: LPAREN LET let_list . RPAREN
-    4 let_list: let_list . let_elem
+    3 let_list: let_list . let_elem
+    4 scope: LPAREN LET let_list . RPAREN
 
     LPAREN  shift, and go to state 27
     RPAREN  shift, and go to state 34
@@ -365,9 +365,9 @@ State 28
 
 State 29
 
-    3 let_list: let_elem .
+    2 let_list: let_elem .
 
-    $default  reduce using rule 3 (let_list)
+    $default  reduce using rule 2 (let_list)
 
 
 State 30
@@ -409,16 +409,16 @@ State 33
 
 State 34
 
-    2 scope: LPAREN LET let_list RPAREN .
+    4 scope: LPAREN LET let_list RPAREN .
 
-    $default  reduce using rule 2 (scope)
+    $default  reduce using rule 4 (scope)
 
 
 State 35
 
-    4 let_list: let_list let_elem .
+    3 let_list: let_list let_elem .
 
-    $default  reduce using rule 4 (let_list)
+    $default  reduce using rule 3 (let_list)
 
 
 State 36

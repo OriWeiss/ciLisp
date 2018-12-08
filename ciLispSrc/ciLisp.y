@@ -29,13 +29,6 @@ program:
             freeNode($1);
         }
     };
-
-scope:
-    LPAREN LET let_list RPAREN {
-        fprintf(stderr,"scope\n");
-        $$ = $3;
-
-    };
 let_list:
     let_elem {
           fprintf(stderr,"let_elem\n");
@@ -45,6 +38,14 @@ let_list:
             fprintf(stderr,"let_list let_elem\n");
             $$ = let_list($2, $1);
     };
+
+scope:
+    LPAREN LET let_list RPAREN {
+        fprintf(stderr,"scope\n");
+        $$ = $3;
+
+    };
+
 let_elem:
     LPAREN TYPE SYMBOL s_expr RPAREN {
         fprintf(stderr,"LPAREN %s SYMBOL s_expr RPAREN\n", $2);
