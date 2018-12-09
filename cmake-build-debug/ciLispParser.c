@@ -442,9 +442,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    24,    24,    34,    41,    45,    53,    57,    61,    66,
-      73,    77,    81,    86,    90,    94,    98,   102,   106,   110,
-     116,   120,   127,   131
+       0,    24,    24,    34,    40,    44,    52,    56,    60,    65,
+      72,    76,    80,    85,    89,    93,    97,   101,   105,   109,
+     115,   119,   126,   130
 };
 #endif
 
@@ -1265,198 +1265,197 @@ yyreduce:
     {
         fprintf(stderr,"scope\n");
         (yyval.symNode) = (yyvsp[-1].symNode);
-
     }
-#line 1271 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1270 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 41 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 40 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
           fprintf(stderr,"let_elem\n");
           (yyval.symNode) = let_list((yyvsp[0].symNode), NULL);
     }
-#line 1280 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1279 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 45 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 44 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
             fprintf(stderr,"let_list let_elem\n");
             (yyval.symNode) = let_list((yyvsp[0].symNode), (yyvsp[-1].symNode));
     }
-#line 1289 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1288 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 53 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 52 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN %s SYMBOL s_expr RPAREN\n", (yyvsp[-3].sval));
         (yyval.symNode) = let_elem(VARIABLE_TYPE, (yyvsp[-3].sval), (yyvsp[-2].sval), NULL, (yyvsp[-1].astNode));
     }
-#line 1298 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1297 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 57 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 56 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN SYMBOL s_expr RPAREN\n");
         (yyval.symNode) = let_elem(VARIABLE_TYPE, NULL, (yyvsp[-2].sval), NULL, (yyvsp[-1].astNode));
     }
-#line 1307 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1306 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 61 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 60 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN\n");
         (yyval.symNode) = let_elem(LAMBDA_TYPE, (yyvsp[-7].sval), (yyvsp[-6].sval), (yyvsp[-3].symNode), (yyvsp[-1].astNode));
         //$$ = userDef($2,$3,$6,$8);
     }
-#line 1317 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1316 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 66 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 65 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"LPAREN TYPE SYMBOL LAMBDA LPAREN arg_list RPAREN s_expr RPAREN\n");
         (yyval.symNode) = let_elem(LAMBDA_TYPE, "REAL", (yyvsp[-6].sval), (yyvsp[-3].symNode), (yyvsp[-1].astNode));
         //$$ = userDef(NULL,$2,$5,$7);
     }
-#line 1327 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1326 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 73 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 72 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= NUMBER\n");
         (yyval.astNode) = number((yyvsp[0].dval));
     }
-#line 1336 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1335 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 77 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 76 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
             fprintf(stderr,"yacc: SYMBOL %s\n",(yyvsp[0].sval));
             (yyval.astNode) = symbol((yyvsp[0].sval));
         }
-#line 1345 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1344 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 81 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 80 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
             fprintf(stderr, "LPAREN SCOPE S_EXPR RPAREN\n");
-            printf("sending %s", ((yyvsp[-1].astNode)->data.function.name))
+            //printf("sending %s", ($3->data.function.name))
             (yyval.astNode) = setScope((yyvsp[-2].symNode),(yyvsp[-1].astNode));
         }
-#line 1355 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1354 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 86 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 85 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "LPAREN func s_expr_list RPAREN\n");
         (yyval.astNode) = function((yyvsp[-2].sval),(yyvsp[-1].astNode));
     }
-#line 1364 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1363 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 90 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 89 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "LPAREN FUNC RPAREN\n");
         (yyval.astNode) = function((yyvsp[-1].sval), NULL);
     }
-#line 1373 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1372 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 94 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 93 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"yacc: LPAREN s_expr RPAREN \n");
         (yyval.astNode) = (yyvsp[-1].astNode);
     }
-#line 1382 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1381 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 98 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 97 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= LPAREN COND s_expr_list RPAREN\n");
         (yyval.astNode) = conditional((yyvsp[-1].astNode));
     }
-#line 1391 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1390 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 102 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 101 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "LPAREN SYMBOL s_expr_list RPAREN\n");
         (yyval.astNode) = function((yyvsp[-2].sval), (yyvsp[-1].astNode));
     }
-#line 1400 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1399 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 106 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 105 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= QUIT\n");
         exit(EXIT_SUCCESS);
     }
-#line 1409 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1408 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 110 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 109 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= error\n");
         yyerror("unexpected token");
         (yyval.astNode) = NULL;
     }
-#line 1419 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1418 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 116 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 115 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"SYMBOL arglist\n");
         (yyval.symNode) = arg_list((yyvsp[-1].sval), (yyvsp[0].symNode));
     }
-#line 1428 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1427 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 120 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 119 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr,"SYMBOL\n");
         (yyval.symNode) = arg_list((yyvsp[0].sval), NULL);
 
     }
-#line 1438 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1437 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 127 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 126 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "s_expr s_expr_list\n");
         (yyval.astNode) = s_expr_list((yyvsp[-1].astNode),(yyvsp[0].astNode));
     }
-#line 1447 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1446 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 131 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
+#line 130 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "s_expr\n");
         (yyval.astNode) = s_expr_list((yyvsp[0].astNode),NULL);
     }
-#line 1456 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1455 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;
 
 
-#line 1460 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
+#line 1459 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1684,4 +1683,4 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 135 "ciLispSrc/ciLisp.y" /* yacc.c:1906  */
+#line 134 "ciLispSrc/ciLisp.y" /* yacc.c:1906  */

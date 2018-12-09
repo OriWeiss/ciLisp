@@ -132,7 +132,7 @@ ssize_t getline(char **buf, size_t *bufsiz, FILE *fp)
  */
 int main(void) {
 
-   // freopen("/dev/null", "w", stderr); // except for this line that can be uncommented to throw away debug printouts
+    freopen("/dev/null", "w", stderr); // except for this line that can be uncommented to throw away debug printouts
     //srand(time(NULL)); //actually seeding random.
     srand(7); //7 is my favorite number!~~
     

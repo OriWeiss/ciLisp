@@ -34,7 +34,6 @@ scope:
     LPAREN LET let_list RPAREN {
         fprintf(stderr,"scope\n");
         $$ = $3;
-
     };
 
 let_list:
