@@ -33,8 +33,9 @@ type "integer"|"real"
 
 }
 {number} {
-    yylval.dval = strtod(yytext, NULL);
-    fprintf(stderr, "lex: NUMBER dval = %lf\n", yylval.dval);
+    yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
+    strcpy(yylval.sval, yytext);
+    fprintf(stderr, "lex: NUMBER sval = %s\n", yylval.sval);
     return NUMBER;
     }
 {type} {

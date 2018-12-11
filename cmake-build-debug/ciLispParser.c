@@ -1329,7 +1329,7 @@ yyreduce:
 #line 72 "ciLispSrc/ciLisp.y" /* yacc.c:1646  */
     {
         fprintf(stderr, "yacc: s_expr ::= NUMBER\n");
-        (yyval.astNode) = number((yyvsp[0].dval));
+        (yyval.astNode) = number((yyvsp[0].sval));
     }
 #line 1335 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispParser.c" /* yacc.c:1646  */
     break;

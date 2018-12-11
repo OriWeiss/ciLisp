@@ -822,14 +822,15 @@ case 5:
 YY_RULE_SETUP
 #line 35 "ciLispSrc/ciLisp.l"
 {
-    yylval.dval = strtod(yytext, NULL);
-    fprintf(stderr, "lex: NUMBER dval = %lf\n", yylval.dval);
+    yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
+    strcpy(yylval.sval, yytext);
+    fprintf(stderr, "lex: NUMBER sval = %s\n", yylval.sval);
     return NUMBER;
     }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 40 "ciLispSrc/ciLisp.l"
+#line 41 "ciLispSrc/ciLisp.l"
 {
     yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
     strcpy(yylval.sval, yytext);
@@ -839,7 +840,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 47 "ciLispSrc/ciLisp.l"
+#line 48 "ciLispSrc/ciLisp.l"
 {
     yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
     strcpy(yylval.sval, yytext);
@@ -849,7 +850,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 54 "ciLispSrc/ciLisp.l"
+#line 55 "ciLispSrc/ciLisp.l"
 {
     fprintf(stderr, "lex: LPAREN\n");
     return LPAREN;
@@ -857,7 +858,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 59 "ciLispSrc/ciLisp.l"
+#line 60 "ciLispSrc/ciLisp.l"
 {
     fprintf(stderr, "lex: RPAREN\n");
     return RPAREN;
@@ -865,7 +866,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 63 "ciLispSrc/ciLisp.l"
+#line 64 "ciLispSrc/ciLisp.l"
 {
     yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
     strcpy(yylval.sval, yytext);
@@ -876,7 +877,7 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 71 "ciLispSrc/ciLisp.l"
+#line 72 "ciLispSrc/ciLisp.l"
 {
     fprintf(stderr, "lex: EOL\n");
     YY_FLUSH_BUFFER;
@@ -885,22 +886,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 77 "ciLispSrc/ciLisp.l"
+#line 78 "ciLispSrc/ciLisp.l"
 ; /* skip whitespace */
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 80 "ciLispSrc/ciLisp.l"
+#line 81 "ciLispSrc/ciLisp.l"
 { // anything else
     printf("ERROR: invalid character: >>%s<<\n", yytext);
     }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 84 "ciLispSrc/ciLisp.l"
+#line 85 "ciLispSrc/ciLisp.l"
 ECHO;
 	YY_BREAK
-#line 904 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispScanner.c"
+#line 905 "/mnt/c/Users/Ori's Lenovo/Desktop/School/comp_232/Ori_Weiss_ciLisp/cmake-build-debug/ciLispScanner.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1868,7 +1869,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 84 "ciLispSrc/ciLisp.l"
+#line 85 "ciLispSrc/ciLisp.l"
 
 
 //TODO: delete this!

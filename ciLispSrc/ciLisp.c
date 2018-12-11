@@ -1,5 +1,6 @@
 #include "ciLisp.h"
 #include <math.h>
+#include <regex.h>
 //#include <time.h>
 
 void yyerror(char *s) {
@@ -13,6 +14,28 @@ void yyerror(char *s) {
 //
 // find out which function it is
 //
+
+//
+// Check is a string is a number
+//
+DATA_TYPE verifyNumber(char *string)
+{
+    DATA_TYPE rv = NO_TYPE;
+
+    regex_t regex;
+
+    if (regcomp(&regex, "[+-]?[0-9]+(\\.[0-9]+)?", REG_EXTENDED) != 0)
+        fprintf(stderr, "Could not compile regex!\n");
+    else if (regexec(&regex, string, 0, NULL, 0) == 0)
+        return strchr(string, '.') == NULL ? INTEGER_TYPE : REAL_TYPE;
+    else
+        yyerror("Invalid input!\n");
+
+    regfree(&regex);
+
+    return rv;
+}
+
 
 SYMBOL_TABLE_NODE * findSymbolNodeByName(char *name, SYMBOL_TABLE_NODE *list)
 {
@@ -68,8 +91,9 @@ DATA_TYPE resolveType(char* type)
 //
 // create a node for a number
 //
-AST_NODE *number(double value)
+AST_NODE *number(char *val)
 {
+    double value = atof(val);
     AST_NODE *p;
     size_t nodeSize;
 
@@ -80,6 +104,7 @@ AST_NODE *number(double value)
 
     p->type = NUM_TYPE;
     p->data.number.value = value;
+    p->data.number.val_type = verifyNumber(val);
 
     return p;
 }
@@ -112,14 +137,17 @@ AST_NODE *function(char *funcName, AST_NODE *s_expr_list)
     p->data.function.name = funcName;
     p->data.function.opList = s_expr_list;
     if(strcmp(funcName,"rand")==0){
-        p->data.function.opList = number( rand() );
+        int random = rand();
+        char * stringRep="";
+        sprintf(stringRep,"%d" ,random);
+        p->data.function.opList = number(stringRep);
     }
     else if(strcmp(funcName,"read")==0){
-        double temp;
+        char temp;
         printf("read := ");
-        scanf("%lf", &temp);
+        scanf("%s", &temp);
         getc(stdin); // remove the number inputted
-        p->data.function.opList = number( temp );
+        p->data.function.opList = number(&temp);
     }
 
     return p;
@@ -237,12 +265,17 @@ SYMBOL_TABLE_NODE *let_elem(SYMBOL_TYPE symType, char* type, char* symbol, SYMBO
         s_expr->scope = args;
     }
 
-
+    if(s_expr->type == NUM_TYPE && (s_expr->data.number.val_type == REAL_TYPE )&& (resolveType(type) == INTEGER_TYPE)){
+        printf("Warning integer type is assigned to a real number\n");
+    }
     p->type = symType;
     p->val_type = resolveType(type);
     p->ident = symbol;
     p->args = args;
     p->val = s_expr;
+    if(s_expr->type == NUM_TYPE && (s_expr->data.number.val_type == REAL_TYPE )&& (resolveType(type) == INTEGER_TYPE)){
+
+    }
     return p;
 }
 

@@ -47,7 +47,7 @@ typedef enum {
     VARIABLE_TYPE,
     LAMBDA_TYPE,
     ARG_TYPE
-} SYMBOL_TYPE; //TODO: added task 7
+} SYMBOL_TYPE;
 
 typedef enum {
     NO_TYPE,
@@ -64,12 +64,13 @@ typedef enum {
 
 typedef struct {
     double value;
+    DATA_TYPE val_type;
 } NUMBER_AST_NODE;
 
 typedef struct stack_node {
     struct ast_node *val;
     struct stack_node *next;
-} STACK_NODE; //TODO: added task 7
+} STACK_NODE;
 
 typedef struct {
     char *name;
@@ -82,12 +83,12 @@ typedef struct return_value {
 } RETURN_VALUE;
 
 typedef struct symbol_table_node {
-    SYMBOL_TYPE type; //TODO: added task 7
+    SYMBOL_TYPE type;
     DATA_TYPE val_type;
     struct symbol_table_node *args;
     char *ident;
     struct ast_node *val;
-    STACK_NODE *stack; //TODO: added task 7
+    STACK_NODE *stack;
     struct symbol_table_node *next;
 } SYMBOL_TABLE_NODE;
 
@@ -114,7 +115,17 @@ typedef struct ast_node {
     struct ast_node *next;
 } AST_NODE;
 
-AST_NODE *number(double value);
+//
+// Check is a string is a number
+//
+DATA_TYPE verifyNumber(char *string);
+
+
+
+
+
+
+AST_NODE *number(char *val);
 
 AST_NODE *conditional(AST_NODE *s_expr_list);
 

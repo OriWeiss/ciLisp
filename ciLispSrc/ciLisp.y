@@ -13,7 +13,7 @@
 %token <sval> FUNC
 %token <sval> SYMBOL
 %token <sval> TYPE
-%token <dval> NUMBER
+%token <sval> NUMBER
 %token LPAREN RPAREN EOL QUIT LET COND LAMBDA
 
 %type <astNode> s_expr s_expr_list
