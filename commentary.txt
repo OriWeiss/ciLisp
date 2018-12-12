@@ -1,0 +1,41 @@
+Author: Ori Weiss
+Date: 12/11/2018
+
+For this assignment I have completed task 8 and the extra credit.
+All test runs are included in the output.txt file
+This includes the grammar :
+
+program ::= s-expr EOL
+
+s-expr ::=
+     quit
+   | number
+   | symbol
+   | ( func s_expr_list )
+   | ( scope s_expr )
+   | ( cond s_expr s_expr s_expr )
+   | ( symbol s_expr_list )
+
+func ::=
+    neg|abs|exp|sqrt|add|sub|mult|div|remainder|log|pow|max|min|exp2
+    |cbrt|hypot|rand|read|print|equal|smaller|larger
+
+s_expr_list ::= s_expr s_expr_list | s_expr
+
+scope ::= <empty> | ( let let_list )
+
+let_list ::= let_elem | let_list let_elem
+
+let_elem ::=
+   ( type symbol s_expr )
+   | ( type symbol lambda ( arg_list ) s_expr )
+
+type ::= <empty> | integer | real
+
+arg_list ::= symbol arg_list | symbol
+
+number ::= digit+ [ . digit+ ]
+symbol ::= letter+
+
+letter ::= [a-zA-Z]
+digit ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9

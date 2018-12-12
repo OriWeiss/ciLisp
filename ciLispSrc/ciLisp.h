@@ -1,3 +1,7 @@
+/*
+ * Author: Ori Weiss
+ * Date: 12/11/2018
+ */
 #ifndef __cilisp_h_
 #define __cilisp_h_
 
@@ -10,7 +14,9 @@
 #include <stdbool.h>
 
 #include "ciLispParser.h"
-
+/*
+ *
+ */
 int yyparse(void);
 
 int yylex(void);
@@ -158,5 +164,3 @@ RETURN_VALUE specialFuncEval(char *name, AST_NODE *opList);
 SYMBOL_TABLE_NODE *arg_list (char *symbol, SYMBOL_TABLE_NODE *list);
 
 #endif
-
-//((let (f lambda (x y) (add x y)))(f (sub 5 2) (mult 2 3))

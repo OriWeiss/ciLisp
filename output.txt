@@ -1,0 +1,104 @@
+Author:Ori Weiss
+Date:12/11/2018
+
+
+> (add ((let (abcd 1)) (sub 3 abcd)) 4)
+(add ((let (abcd 1)) (sub 3 abcd)) 4)
+
+6.000000
+> (mult ((let (a 1) (b 2)) (add a b)) (sqrt 2))
+(mult ((let (a 1) (b 2)) (add a b)) (sqrt 2))
+
+4.242641
+> (add ((let (a ((let (b 2)) (mult b (sqrt 10))))) (div a 2)) ((let (c 5)) (sqrt c)))
+(add ((let (a ((let (b 2)) (mult b (sqrt 10))))) (div a 2)) ((let (c 5)) (sqrt c)))
+
+5.398346
+> ((let (first (sub 5 1)) (second 2)) (add (pow 2 first) (sqrt second)))
+((let (first (sub 5 1)) (second 2)) (add (pow 2 first) (sqrt second)))
+
+17.414214
+> ((let (a ((let (c 3) (d 4)) (mult c d)))) (sqrt a))
+((let (a ((let (c 3) (d 4)) (mult c d)))) (sqrt a))
+
+3.464102
+> ((let (integer a 1))(print a))
+((let (integer a 1))(print a))
+=> 1
+1.000000
+> ((let (real b 10))(print b))
+((let (real b 10))(print b))
+=> 10.000000
+10.000000
+> ((let (integer a (read)) (real b (read))) (print a b))
+((let (integer a (read)) (real b (read))) (print a b))
+read := 2
+2
+read := 3
+3
+=> 2 3.000000
+3.000000
+> ((let (a 100)) (cond (smaller (rand) 100) (add a 2) (sub a 2)))
+((let (a 100)) (cond (smaller (rand) 100) (add a 2) (sub a 2)))
+
+98.000000
+> ((let (myA (read))(myB (rand)))(cond (smaller myA myB) (print myA) (print myB)))
+((let (myA (read))(myB (rand)))(cond (smaller myA myB) (print myA) (print myB)))
+read := 3
+3
+=> 3.000000
+3.000000
+> (add 1 2 3 4 5)
+(add 1 2 3 4 5)
+
+15.000000
+> ((let (integer a 1)(real b 2))(print a b 3))
+((let (integer a 1)(real b 2))(print a b 3))
+=> 1 2.000000 3.000000
+3.000000
+> ((let (real myFunc lambda (x y) (mult (add x 5) (sub y 2)))) (sub (myFunc 3 5) 2))
+((let (real myFunc lambda (x y) (mult (add x 5) (sub y 2)))) (sub (myFunc 3 5) 2))
+
+22.000000
+> ((let (f lambda (x y) (add x y)))(f (sub 5 2) (mult 2 3)))
+((let (f lambda (x y) (add x y)))(f (sub 5 2) (mult 2 3)))
+
+9.000000
+> ((let (a 1) (f lambda (x y) (add x y)))(f 2 (f a 3)))
+((let (a 1) (f lambda (x y) (add x y)))(f 2 (f a 3)))
+
+6.000000
+> ((let (a (read)) (b (rand)))(add a (add b (add a ((let (a (read))) (add b a))))))
+((let (a (read)) (b (rand)))(add a (add b (add a ((let (a (read))) (add b a))))))
+read := 4
+4
+read := 5
+5
+
+2545159811.000000
+> ((let (a 2) (f lambda (x y) ((let (b 3)) (add x (mult b y)))))(f (f (f a 2) (mult a 3)) (f a (mult a 5))))
+((let (a 2) (f lambda (x y) ((let (b 3)) (add x (mult b y)))))(f (f (f a 2) (mult a 3)) (f a (mult a 5))))
+
+122.000000
+
+Warnings
+> ((let (integer a (mult 1.1 1))) a)
+((let (integer a (mult 1.1 1))) a)
+WARNING: incompatible type assignment for variable a
+
+1.000000
+> (duck 1)
+(duck 1)
+
+ERROR: invalid function
+
+0.000000
+>
+
+EXTRA CREDIT
+
+> ((let (integer a 1.1)) a)
+((let (integer a 1.1)) a)
+Warning integer type is assigned to a real number
+
+1.000000

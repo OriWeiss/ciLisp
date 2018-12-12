@@ -1,3 +1,8 @@
+/*
+ * Author: Ori Weiss
+ * Date: 12/11/2018
+ */
+
 #include "ciLisp.h"
 #include <math.h>
 #include <regex.h>
@@ -138,7 +143,7 @@ AST_NODE *function(char *funcName, AST_NODE *s_expr_list)
     p->data.function.opList = s_expr_list;
     if(strcmp(funcName,"rand")==0){
         int random = rand();
-        char * stringRep="";
+        char * stringRep= malloc((int)((ceil(log10(random))+1)*sizeof(char)));
         sprintf(stringRep,"%d" ,random);
         p->data.function.opList = number(stringRep);
     }
@@ -443,6 +448,8 @@ RETURN_VALUE evalSymbol(char *name, AST_NODE *symbol)
 
     //try to find node in this scope.
     SYMBOL_TABLE_NODE * node = findSymbolWithScope(name, symbol);
+
+
     RETURN_VALUE val = {NO_TYPE, 0.0};
     //if in this scope
     if (node != NULL) {
@@ -483,7 +490,10 @@ RETURN_VALUE userFunction(AST_NODE *p)
 
 
     lambda = findSymbolWithScope(p->data.function.name,p);
-
+    if(lambda == NULL){
+        yyerror("invalid function");
+        return (RETURN_VALUE) {NO_TYPE,0.0};
+    }
     int numOfArgs = 0;
     SYMBOL_TABLE_NODE *args  = lambda->args;
     while(args!=NULL){ //count args

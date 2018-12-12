@@ -64,7 +64,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 6 "ciLispSrc/ciLisp.y" /* yacc.c:1909  */
+#line 45 "ciLispSrc/ciLisp.y" /* yacc.c:1909  */
 
     double dval;
     char *sval;
